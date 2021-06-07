@@ -9,16 +9,13 @@ const { validateAgainstSchema } = require('../lib/validation');
  * API routes for 'users' collection.
  */
 
-const router = require('express').Router();
-
-const { validateAgainstSchema } = require('../lib/validation');
 const { generateAuthToken, requireAuthentication } = require('../lib/auth');
 const {
   UserSchema,
   insertNewUser,
   getUserById,
   validateUser
-} = require('../models/user');
+} = require('../models/users');
 
 router.post('/', async (req, res) => {
   if (validateAgainstSchema(req.body, UserSchema)) {

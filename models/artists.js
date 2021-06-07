@@ -10,7 +10,7 @@ const { extractValidFields } = require('../lib/validation');
 /*
  * Schema describing required/optional fields of a review object.
  */
-const AristSchema = {
+const ArtistSchema = {
   userid: { required: true },
   name: { required: true },
   label: { required: false },
