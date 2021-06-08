@@ -24,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
   } catch (err) {
     console.error(err);
     res.status(500).send({
-      error: "Unable to fetch song.  Please try again later."
+      error: "Unable to fetch artist. Please try again later."
     });
   }
 });
