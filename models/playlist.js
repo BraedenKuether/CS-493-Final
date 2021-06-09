@@ -17,6 +17,36 @@ const PlaylistSchema = {
 };
 exports.PlaylistSchema = PlaylistSchema;
 
+async function getPlaylists(page) {
+  const db = getDBReference();
+  const collection = db.collection('playlists');
+  const count = await collection.countDocuments();
+
+  /*
+   * Compute last page number and make sure page is within allowed bounds.
+   * Compute offset into collection.
+   */
+  const pageSize = 10;
+  const lastPage = Math.ceil(count / pageSize);
+  page = page > lastPage ? lastPage : page;
+  page = page < 1 ? 1 : page;
+  const offset = (page - 1) * pageSize;
+
+  const results = await collection.find({})
+    .sort({ _id: 1 })
+    .skip(offset)
+    .limit(pageSize)
+    .toArray();
+
+  return {
+    playlists: results,
+    page: page,
+    totalPages: lastPage,
+    pageSize: pageSize,
+    count: count
+  };
+}
+exports.getPlaylists = getPlaylists;
 /*
  * Executes a DB query to insert a new business into the database.  Returns
  * a Promise that resolves to the ID of the newly-created business entry.
