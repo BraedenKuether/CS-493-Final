@@ -33,8 +33,9 @@ router.get('/', async (req, res, next) => {
     });
   }
 });
+
 /*
- * Route to fetch info about a specific playlist.
+ * Route to fetch info about a specific playlist. --> AUTHENTICATION
  */
 router.get('/:id', async (req, res, next) => {
   try {
@@ -52,4 +53,18 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+// Route to post new playlists --> AUTHENTICATION
+router.post('/', async (req, res, next) => {
+
+});
+
+// Route to update a playlist --> AUTHENTICATION
+router.put('/:id', async (req, res, next) => {
+
+});
+
+// Route to delete a playlist --> AUTHENTICATION
+router.delete('/:id', async (req, res, next) => {
+
+});
 module.exports = router;
