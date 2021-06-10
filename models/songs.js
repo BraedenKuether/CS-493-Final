@@ -108,3 +108,16 @@ async function getSongDetailsById(id) {
   return song;
 }
 exports.getSongDetailsById = getSongDetailsById;
+
+async function songSearch(keyword) {
+  const db = getDBReference();
+  const collection = db.collection('songs');
+
+  const results = await collection.find({
+    "name": new RegExp(keyword, 'i')
+  }).toArray();
+
+  return results;
+
+}
+exports.songSearch = songSearch;

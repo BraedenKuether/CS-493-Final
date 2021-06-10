@@ -11,9 +11,8 @@ const { extractValidFields } = require('../lib/validation');
  * Schema describing required/optional fields of a review object.
  */
 const ArtistSchema = {
-  userid: { required: true },
   name: { required: true },
-  label: { required: false },
+  label: { required: false }
 };
 exports.ArtistSchema = ArtistSchema;
 
@@ -22,7 +21,7 @@ exports.ArtistSchema = ArtistSchema;
  * a Promise that resolves to the ID of the newly-created business entry.
  */
 async function insertNewArtist(artist) {
-  artist = extractValidFields(artist, SongSchema);
+  artist = extractValidFields(artist, ArtistSchema);
   const db = getDBReference();
   const collection = db.collection('artists');
   const result = await collection.insertOne(artist);
@@ -50,3 +49,34 @@ async function getArtistById(id) {
   }
 }
 exports.getArtistById = getArtistById;
+
+async function getArtists(page) {
+  const db = getDBReference();
+  const collection = db.collection('artists');
+  const count = await collection.countDocuments();
+
+  /*
+   * Compute last page number and make sure page is within allowed bounds.
+   * Compute offset into collection.
+   */
+  const pageSize = 10;
+  const lastPage = Math.ceil(count / pageSize);
+  page = page > lastPage ? lastPage : page;
+  page = page < 1 ? 1 : page;
+  const offset = (page - 1) * pageSize;
+
+  const results = await collection.find({})
+    .sort({ _id: 1 })
+    .skip(offset)
+    .limit(pageSize)
+    .toArray();
+
+  return {
+    artists: results,
+    page: page,
+    totalPages: lastPage,
+    pageSize: pageSize,
+    count: count
+  };
+}
+exports.getArtists = getArtists;

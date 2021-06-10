@@ -8,7 +8,8 @@ const {
   SongSchema,
   getSongsPage,
   insertNewSong,
-  getSongDetailsById
+  getSongDetailsById,
+  songSearch
 } = require('../models/songs');
 
 /*
@@ -54,6 +55,25 @@ router.get('/:id', async (req, res, next) => {
     console.error(err);
     res.status(500).send({
       error: "Unable to fetch song.  Please try again later."
+    });
+  }
+});
+
+router.get('/search/:keyword', async (req, res, next) => {
+  try {
+    const songs = await songSearch(req.params.keyword);
+    if (songs) {
+      res.status(200).send(songs);
+    } else {
+      res.status(500).send({
+        error: "There are no songs similar to keyword."
+      });
+      next();
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      error: "Unable to fetch songs.  Please try again later."
     });
   }
 });
