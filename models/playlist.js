@@ -14,6 +14,7 @@ const PlaylistSchema = {
   userid: { required: true },
   name: { required: true },
   songs: { required: true },
+  playlistCover: {required: true}
 };
 exports.PlaylistSchema = PlaylistSchema;
 

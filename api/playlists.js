@@ -2,7 +2,8 @@
  * API sub-router for playlist collection endpoints.
  */
 const router = require('express').Router();
-
+const multer = require('multer');
+const crypto = require('crypto');
 const { validateAgainstSchema } = require('../lib/validation');
 const { generateAuthToken, requireAuthentication } = require('../lib/auth');
 const {
@@ -13,6 +14,26 @@ const {
   updatePlaylist,
   deletePlaylist
 } = require('../models/playlist');
+
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: `${__dirname}/uploads`,
+    filename: (req, file, callback) => {
+      const filename = crypto.pseudoRandomBytes(16).toString('hex');
+      const extension = acceptedFileTypes[file.mimetype];
+      callback(null, `${filename}.${extension}`);
+    }
+  }),
+  fileFilter: (req, file, callback) => {
+    callback(null, !!acceptedFileTypes[file.mimetype])
+  }
+});
+
+const acceptedFileTypes = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png'
+};
 
 
 //Method ot get all playlists
@@ -64,10 +85,16 @@ router.get('/:id', requireAuthentication, async (req, res, next) => {
 });
 
 // Route to post new playlists --> AUTHENTICATION
-router.post('/', requireAuthentication, async (req, res, next) => {
+router.post('/', upload.single('image') , requireAuthentication, async (req, res, next) => {
   if (req.user === req.body.userid){
     try {
-      const playlist = await insertNewPlaylist(req.body);
+      const playlistInfo = {
+        userid: req.body.userid,
+        name: req.body.name,
+        songs: req.body.songs,
+        playlistCover: `/media/${req.file.filename}`
+      }
+      const playlist = await insertNewPlaylist(playlistInfo);
       if (playlist) {
         res.status(200).send(playlist);
       } else {
