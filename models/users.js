@@ -55,3 +55,17 @@ exports.validateUser = async function (id, password) {
   const user = await getUserById(id, true);
   return user && await bcrypt.compare(password, user.password);
 }
+
+async function getAllUsers() {
+  const db = getDBReference();
+  const collection = db.collection('users');
+  const results = await collection.find({})
+  .sort({ _id: 1 })
+  .toArray();
+
+  return {
+    users: results
+  };
+
+}
+exports.getAllUsers = getAllUsers;

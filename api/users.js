@@ -14,7 +14,8 @@ const {
   UserSchema,
   insertNewUser,
   getUserById,
-  validateUser
+  validateUser,
+  getAllUsers
 } = require('../models/users');
 
 router.post('/', async (req, res) => {
@@ -83,6 +84,13 @@ router.get('/:id', requireAuthentication, async (req, res, next) => {
       });
     }
   }
+});
+
+
+router.get('/', async (req, res, next) => {
+  const users = await getAllUsers();
+
+  res.status(200).send(users);
 });
 
 module.exports = router;
