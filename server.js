@@ -38,7 +38,6 @@ function getUserTokenBucket(ip) {
 }
 
 function saveUserTokenBucket(ip, tokenBucket) {
-  console.log("User IP:", ip)
   return new Promise((resolve, reject) => {
     redisClient.hmset(ip, tokenBucket, (err, resp) => {
       if (err) {
@@ -94,6 +93,8 @@ app.use(express.static('public'));
  * top-level router lives in api/index.js.  That's what we include here, and
  * it provides all of the routes.
  */
+app.use(rateLimit);
+
 app.use('/', api);
 
 app.use('*', function (req, res, next) {
