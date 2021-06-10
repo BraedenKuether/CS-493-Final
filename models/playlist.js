@@ -52,7 +52,7 @@ exports.getPlaylists = getPlaylists;
  * a Promise that resolves to the ID of the newly-created business entry.
  */
 async function insertNewPlaylist(playlist) {
-  playlist = extractValidFields(playlist, SongSchema);
+  playlist = extractValidFields(playlist, PlaylistSchema);
   const db = getDBReference();
   const collection = db.collection('playlists');
   const result = await collection.insertOne(playlist);
@@ -80,3 +80,41 @@ async function getPlaylistById(id) {
   }
 }
 exports.getPlaylistById = getPlaylistById;
+
+async function updatePlaylist(id, playlist) {
+  const db = getDBReference();
+  const collection = db.collection('playlists');
+  if (!ObjectId.isValid(id)) {
+    return false;
+  } else {
+    var myquery = {_id: new ObjectId(id)};
+    var newvalues = { $set: { userid: playlist.userid, name: playlist.name, songs: playlist.songs}};
+    const results = await collection
+      .updateOne(myquery, newvalues, function(err, obj) {
+        if (err) throw err;
+        console.log("1 document updated");
+      })
+    
+    return true;
+  }
+
+}
+exports.updatePlaylist = updatePlaylist;
+
+async function deletePlaylist(id) {
+  const db = getDBReference();
+  const collection = db.collection('playlists');
+  if (!ObjectId.isValid(id)) {
+    return false;
+  } else {
+    var myquery = {_id: new ObjectId(id)};
+    const results = await collection
+      .deleteOne(myquery, function(err, obj) {
+        if (err) throw err;
+        console.log("1 document deleted");
+      });
+    return true;
+  }
+  
+}
+exports.deletePlaylist = deletePlaylist;
