@@ -15,7 +15,8 @@ const {
   insertNewUser,
   getUserById,
   validateUser,
-  getAllUsers
+  getAllUsers,
+  getPlaylistsByUserId
 } = require('../models/users');
 
 router.post('/', async (req, res) => {
@@ -91,6 +92,28 @@ router.get('/', async (req, res, next) => {
   const users = await getAllUsers();
 
   res.status(200).send(users);
+});
+
+router.get('/:id/playlists', requireAuthentication, async (req, res, next) => {
+  if (req.user !== req.params.id) {
+    res.status(403).send({
+      error: "Unauthorized to access the specified resource"
+    });
+  } else {
+    try {
+      const playlists = await getPlaylistsByUserId(req.params.id);
+      if (playlists) {
+        res.status(200).send({ playlists: playlists });
+      } else {
+        next();
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({
+        error: "Unable to fetch playlists.  Please try again later."
+      });
+    }
+  }
 });
 
 module.exports = router;

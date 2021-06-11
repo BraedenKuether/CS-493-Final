@@ -69,3 +69,16 @@ async function getAllUsers() {
 
 }
 exports.getAllUsers = getAllUsers;
+
+async function getPlaylistsByUserId(id) {
+  const db = getDBReference();
+  const collection = db.collection('playlists');
+  const results = await collection.find({
+    userid: id
+  }).toArray();
+
+  console.log(results); 
+
+  return results
+}
+exports.getPlaylistsByUserId = getPlaylistsByUserId;

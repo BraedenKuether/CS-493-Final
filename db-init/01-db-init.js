@@ -123,4 +123,3 @@ db.artists.insertMany([
     "artistid": 6
   }
 ]);
-

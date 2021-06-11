@@ -1,0 +1,423 @@
+{
+	"info": {
+		"_postman_id": "1c5fdcf5-7cab-47c1-b0b1-218be1c0b453",
+		"name": "CS 493 Final Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Route to Post a new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Neranjan\",\n    \"email\": \"kuppuswn@oregonstate.edu\",\n    \"password\": \"hunter2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post request to login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"60c2aa93b9816800149021e9\",\n    \"password\": \"hunter2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to get details about a specific user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGMyYWE5M2I5ODE2ODAwMTQ5MDIxZTkiLCJpYXQiOjE2MjMzNzA0MjgsImV4cCI6MTYyMzQ1NjgyOH0.otCVkySv1-AQOmSU_LiCnxK2mMo2AJMZty5D-OSxBlo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/users/60c2aa93b9816800149021e9",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"60c2aa93b9816800149021e9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to get a users playlists",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGMyYWE5M2I5ODE2ODAwMTQ5MDIxZTkiLCJpYXQiOjE2MjMzNzA0MjgsImV4cCI6MTYyMzQ1NjgyOH0.otCVkySv1-AQOmSU_LiCnxK2mMo2AJMZty5D-OSxBlo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/users/60c2aa93b9816800149021e9/playlists",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"60c2aa93b9816800149021e9",
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Playlists",
+			"item": [
+				{
+					"name": "Route to Post a new playlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGMyYWE5M2I5ODE2ODAwMTQ5MDIxZTkiLCJpYXQiOjE2MjMzNzA0MjgsImV4cCI6MTYyMzQ1NjgyOH0.otCVkySv1-AQOmSU_LiCnxK2mMo2AJMZty5D-OSxBlo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/neranjank/Desktop/PlaylistCover.jpeg"
+								},
+								{
+									"key": "name",
+									"value": "Neranjan's Playlist",
+									"type": "text"
+								},
+								{
+									"key": "userid",
+									"value": "60c2aa93b9816800149021e9",
+									"type": "text"
+								},
+								{
+									"key": "songs",
+									"value": "Goosebumps, She Will Be Loved, Passionfruit, HUMBLE. ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/playlists",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to get all playlists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/playlists",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to get a specific playlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGMyYWE5M2I5ODE2ODAwMTQ5MDIxZTkiLCJpYXQiOjE2MjMzNzA0MjgsImV4cCI6MTYyMzQ1NjgyOH0.otCVkySv1-AQOmSU_LiCnxK2mMo2AJMZty5D-OSxBlo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/playlists/60c2ad0fb9816800149021eb",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"playlists",
+								"60c2ad0fb9816800149021eb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to update a playlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGMyYWE5M2I5ODE2ODAwMTQ5MDIxZTkiLCJpYXQiOjE2MjMzNzA0MjgsImV4cCI6MTYyMzQ1NjgyOH0.otCVkySv1-AQOmSU_LiCnxK2mMo2AJMZty5D-OSxBlo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userid\": \"60c2aa93b9816800149021e9\",\n    \"name\": \"Neranjans_Playlist_V2\",\n    \"songs\": \"Hold On We're Going Home, LOVE.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/playlists/60c2ad0fb9816800149021eb",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"playlists",
+								"60c2ad0fb9816800149021eb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to delete a playlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGMyYWE5M2I5ODE2ODAwMTQ5MDIxZTkiLCJpYXQiOjE2MjMzNzA0MjgsImV4cCI6MTYyMzQ1NjgyOH0.otCVkySv1-AQOmSU_LiCnxK2mMo2AJMZty5D-OSxBlo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/playlists/60c2ad0fb9816800149021eb",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"playlists",
+								"60c2ad0fb9816800149021eb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to view the playlist cover image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/media/04e678639c27079a06752acdcb1a124c.jpg",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"media",
+								"04e678639c27079a06752acdcb1a124c.jpg"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Songs",
+			"item": [
+				{
+					"name": "Route to get all songs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/songs",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"songs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to get information about a specific song",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/songs/60c2851a2ef8de9599887649",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"songs",
+								"60c2851a2ef8de9599887649"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to get all songs that match a certain keyword",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/songs/search/Go",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"songs",
+								"search",
+								"Go"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Artists",
+			"item": [
+				{
+					"name": "Route to get information about all artists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/artists",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route to get information about a specific artist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/artists/60c2851a2ef8de9599887658",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"artists",
+								"60c2851a2ef8de9599887658"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
